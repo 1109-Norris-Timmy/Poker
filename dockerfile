@@ -1,4 +1,4 @@
-FROM alpine
+FROM python:3
 
 RUN apk add --no-cache bash
 
