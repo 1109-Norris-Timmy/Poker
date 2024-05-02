@@ -1,11 +1,9 @@
-FROM alpine
+FROM python:3
 
-RUN apk add --no-cache bash
+ADD Poker.py .
 
-WORKDIR /app
+RUN pip install requests beautifulsoup4
 
-COPY Poker.py .
-RUN chmod +x Poker.py 
+CMD ["python", "./Poker.py"]
 
-ENTRYPOINT [ "/app/Poker.py" ]
 
