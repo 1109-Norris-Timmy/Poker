@@ -16,4 +16,5 @@ jobs:
           docker build . -t norristimmy/final_project:latest
       - name: publish
         run: |
+          docker login -u norristimmy -p ${{ secrets.DOCKER_HUB_TOKEN }}
           docker push norristimmy/final_project:latest
