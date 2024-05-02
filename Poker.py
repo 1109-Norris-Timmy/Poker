@@ -31,13 +31,7 @@ def main():
         while not BetIsValid:
             print('\nYou have', PlayerMoney, 'Dollars')
             bet = int(input('\nWould you like to place a bet? If so, how much?\n'))
-            if bet <= PlayerMoney:
-                print('Betting', bet, 'dollars')
-                BetIsValid = True
-            else:
-                print('Bet is not valid, returning to bet input')
-                bet = 0
-
+            BetIsValid = ValidBet(PlayerMoney,bet)
         print('Would you like a redeal? use numbers 1-5 to select your card, press 0 to submit')
         Menu = True
         Select = [0, 0, 0, 0, 0]
@@ -76,29 +70,11 @@ def main():
 
         print('Dealer\'s Hand:\n')
         ShowHand(DealerHand)
-
         result = DidPlayerWinner(PlayerHand, DealerHand)
-        if result == 1:
-            print('\nPlayer Wins!, You win', totalbet, 'dollars!')
-            PlayerMoney += totalbet
-            DealerMoney -= totalbet
-        elif result == 2:
-            print('\nDealer Wins!, You Lose', totalbet, 'dollars!')
-            PlayerMoney -= totalbet
-            DealerMoney += totalbet
-        else:
-            print('\nTie, All parties push')
-
+        GameResult(result,PlayerMoney,DealerMoney,totalbet)
         print('\nYour Money:', PlayerMoney)
         print('Dealer Money:', DealerMoney)
-        if DealerMoney == 0:
-            print('You beat the Dealer!!')
-            again = 'n'
-        if PlayerMoney == 0:
-            print('You went broke, Too Bad.')
-            again = 'n'
-        else: 
-            again = input('\nPlay Again? (y/n)')
+        again = MoneyLeft(PlayerMoney, DealerMoney)
         
     print('\nThanks for Playing!')
 
@@ -170,6 +146,45 @@ def deck():
 def ShowHand(hand):
     for card in hand:
         CardName(card)
+
+def MoneyLeft(playerMoney, dealerMoney):
+    returnvalue = 'NULL'
+    if dealerMoney == 0:
+        print('You beat the Dealer!!')
+        returnvalue = 'n'
+        return returnvalue
+    if playerMoney == 0:
+        print('You went broke, Too Bad.')
+        returnvalue = 'n'
+        return returnvalue
+    else: 
+        returnvalue = 'y'
+        return returnvalue 
+
+def ValidBet(PlayerMoney,bet):
+    if bet <= PlayerMoney:
+        print('Betting', bet, 'dollars')
+        return True
+    else:
+        print('Bet is not valid, returning to bet input')
+        bet = 0
+        return False
+
+def GameResult(result, PlayerMoney,DealerMoney,totalbet):
+    if result == 1:
+        print('\nPlayer Wins!, You win', totalbet, 'dollars!')
+        PlayerMoney += totalbet
+        DealerMoney -= totalbet
+        return DealerMoney, PlayerMoney
+    elif result == 2:
+        print('\nDealer Wins!, You Lose', totalbet, 'dollars!')
+        PlayerMoney -= totalbet
+        DealerMoney += totalbet
+        return DealerMoney, PlayerMoney
+    else:
+        print('\nTie, All parties push')
+        return DealerMoney, PlayerMoney
+
 
 if __name__ == "__main__": 
     main()
