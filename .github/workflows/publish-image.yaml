@@ -18,3 +18,7 @@ jobs:
         run: |
           docker login -u norristimmy -p ${{ secrets.DOCKER_HUB_TOKEN }}
           docker push norristimmy/final_project:latest
+      - name: pull
+        run: |
+          docker login -u norristimmy -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker pull norristimmy/final_project:latest
