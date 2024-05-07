@@ -22,3 +22,10 @@ jobs:
         run: |
           docker login -u norristimmy -p ${{ secrets.DOCKER_HUB_TOKEN }}
           docker pull norristimmy/final_project:latest
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+            image: norristimmy/final_project:latest
+            options: -v ${{ github.workspace}}:/data
+            run: |
+              docker run-it final_project:latest
