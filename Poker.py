@@ -30,8 +30,7 @@ def main():
         BetIsValid = False
         while not BetIsValid:
             print('\nYou have', PlayerMoney, 'Dollars')
-            print('\nWould you like to place a bet? If so, how much?\n')
-            bet = 25
+            bet = int(input('\nWould you like to place a bet? If so, how much?\n'))
             BetIsValid = ValidBet(PlayerMoney,bet)
         print('Would you like a redeal? use numbers 1-5 to select your card, press 0 to submit')
         Menu = True
@@ -44,11 +43,13 @@ def main():
                 else:
                     print('Keeping your ', end='')
                 CardName(PlayerHand[i])
-            choice = 0
-            if choice == 0:
-                Menu = False
-            else:
-                Select[choice - 1] = 1 - Select[choice - 1]
+            choice = input('\n')
+            if choice.isdigit() and 0 <= int(choice) <= 5:
+                choice = int(choice)
+                if choice == 0:
+                    Menu = False
+                else:
+                    Select[choice - 1] = 1 - Select[choice - 1]
 
         print("Redealing... here is your hand!\n")
         for i in range(5):
@@ -58,7 +59,7 @@ def main():
             CardName(PlayerHand[i])
             time.sleep(0.5)
 
-        totalbet = bet + 0
+        totalbet = bet + int(input('\nBet more?? If so how much'))
         while totalbet > PlayerMoney:
             print('Bet is not valid, returning to bet input')
             totalbet = 0
